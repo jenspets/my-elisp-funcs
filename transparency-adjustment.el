@@ -11,7 +11,16 @@
       jps-transparency-step 5)
 
 (set-frame-parameter nil 'alpha-background jps-frame-transparency)
-(add-to-list 'default-frame-alist '(alpha-background . jps-frame-transparency))
+; The following code makes emacsclient only start in terminal mode:
+; (add-to-list 'default-frame-alist '(alpha-background . jps-frame-transparency))
+; TODO: Fix default transparency for emacsclient
+
+;; This does also not work, emacsclient just crashes with it...
+;; (add-hook 'after-make-frame-functions 'jps-set-transparency)
+;; (defun jps-set-transparency ()
+;;   "Set default parameters after creating a new window.  Fixes a bug when running as emacsserver."
+;;   (set-frame-parameter nil 'alpha-backround jps-frame-transparency)
+;;   (add-to-list 'default-frame-alist '(alpha-background . jps-frame-transparency)))
 
 (defun toggle-transparency ()
   "Toggle transparency settings for frame."
