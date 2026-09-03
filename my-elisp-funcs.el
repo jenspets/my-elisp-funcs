@@ -5,6 +5,23 @@
 
 ;;; Code:
 
+(defun my-show-header ()
+  "Show a header with information in some major modes.  To enable, use (add-hook 'buffer-list-update-hook 'my-show-header) in init file."
+  ;; (when (and (or (eq major-mode 'org-mode)
+  ;; (eq major-mode 'python-mode))
+  (when (and (or (eq major-mode 'org-mode)
+		 (derived-mode-p 'prog-mode))
+	     (not (derived-mode-p 'epresent-mode))  ; Don't want header-line when presenting
+	     (not (and (boundp 'gptel-mode) gptel-mode)))  ; Needed for org-mode in gptel; it uses the header-line for status information
+    (setq header-line-format
+	  '(:eval
+	    (list
+	     "["
+	     (buffer-name)
+	     "]> "
+	     (which-function))))))
+
+
 (defun today (&optional latex-format)
   "Insert today's date in ISO format.  If LATEX-FORMAT is set, add double hyphen."
   (interactive)
